@@ -1,0 +1,17 @@
+# This is a config for E2B sandbox template.
+# You can use template ID (ylg524c9ioseyvxuo7i9) or template name (lunaris) to create a sandbox:
+
+# Python SDK
+# from e2b import Sandbox, AsyncSandbox
+# sandbox = Sandbox("lunaris") # Sync sandbox
+# sandbox = await AsyncSandbox.create("lunaris") # Async sandbox
+
+# JS SDK
+# import { Sandbox } from 'e2b'
+# const sandbox = await Sandbox.create('lunaris')
+
+team_id = "37c14397-fa4d-44c3-90c6-8f6d93d3bce6"
+start_cmd = "/compile_page.sh"
+dockerfile = "e2b.Dockerfile"
+template_name = "lunaris"
+template_id = "ylg524c9ioseyvxuo7i9"
