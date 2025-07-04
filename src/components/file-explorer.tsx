@@ -37,15 +37,6 @@ export const FileExplorer = ({ files }: FileExplorerProps) => {
     }
   };
 
-  if (selectedFile) {
-    console.log(
-      "selectedFile:",
-      selectedFile,
-      "files[selectedFile]:",
-      files[selectedFile]
-    );
-  }
-
   return (
     <div className="h-full">
       <ResizablePanelGroup direction="horizontal" className="h-full">
