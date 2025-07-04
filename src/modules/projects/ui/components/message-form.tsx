@@ -85,7 +85,7 @@ export const MessageForm = ({ projectId }: Props) => {
               minRows={2}
               maxRows={8}
               className="pt-4 resize-none border-none w-full outline-none bg-transparent"
-              placeholder="ask lunaris to build..."
+              placeholder="Ask Lunaris to build..."
               onKeyDown={(e) => {
                 if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
                   e.preventDefault();
