@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/resizable";
 import { CopyIcon } from "lucide-react";
 import { useState } from "react";
+import { FileTree } from "@/components/file-tree";
 
 type FileCollection = { [path: string]: string };
 
@@ -30,36 +31,31 @@ export const FileExplorer = ({ files }: FileExplorerProps) => {
     if (selectedFile && files[selectedFile]) {
       try {
         await navigator.clipboard.writeText(files[selectedFile]);
+        // You could add a toast notification here
       } catch (err) {
         console.error("Failed to copy to clipboard:", err);
       }
     }
   };
 
+  if (selectedFile) {
+    console.log(
+      "selectedFile:",
+      selectedFile,
+      "files[selectedFile]:",
+      files[selectedFile]
+    );
+  }
+
   return (
     <div className="h-full">
       <ResizablePanelGroup direction="horizontal" className="h-full">
         <ResizablePanel defaultSize={30} minSize={20} className="bg-sidebar">
-          <div className="h-full flex flex-col">
-            <div className="p-3 border-b">
-              <h3 className="text-sm font-medium">Files</h3>
-            </div>
-            <div className="flex-1 overflow-y-auto p-2">
-              {Object.keys(files).map((filePath) => (
-                <button
-                  key={filePath}
-                  onClick={() => setSelectedFile(filePath)}
-                  className={`w-full text-left p-2 rounded text-sm hover:bg-sidebar-accent transition-colors ${
-                    selectedFile === filePath
-                      ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                      : "text-sidebar-foreground"
-                  }`}
-                >
-                  <div className="truncate">{filePath}</div>
-                </button>
-              ))}
-            </div>
-          </div>
+          <FileTree
+            files={files}
+            selectedFile={selectedFile}
+            onFileSelect={setSelectedFile}
+          />
         </ResizablePanel>
         <ResizableHandle className="hover:bg-primary transition-colors" />
         <ResizablePanel defaultSize={70} minSize={50} className="flex flex-col">
