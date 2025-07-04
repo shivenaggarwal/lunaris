@@ -25,7 +25,6 @@ function buildFileTree(files: { [path: string]: string }): FileNode[] {
   const tree: FileNode[] = [];
   const nodeMap = new Map<string, FileNode>();
 
-  // First, create all nodes
   Object.keys(files).forEach((filePath) => {
     const parts = filePath.split("/").filter(Boolean);
 
@@ -45,7 +44,6 @@ function buildFileTree(files: { [path: string]: string }): FileNode[] {
     });
   });
 
-  // Then, build the tree structure
   Object.keys(files).forEach((filePath) => {
     const parts = filePath.split("/").filter(Boolean);
 
@@ -57,12 +55,10 @@ function buildFileTree(files: { [path: string]: string }): FileNode[] {
       if (!currentNode) return;
 
       if (index === 0) {
-        // Root level node
         if (!tree.some((node) => node.path === currentPath)) {
           tree.push(currentNode);
         }
       } else {
-        // Child node
         const parentNode = nodeMap.get(parentPath);
         if (
           parentNode &&
@@ -75,7 +71,6 @@ function buildFileTree(files: { [path: string]: string }): FileNode[] {
     });
   });
 
-  // Sort function
   const sortNodes = (nodes: FileNode[]): FileNode[] => {
     return nodes.sort((a, b) => {
       if (a.type === b.type) {
@@ -85,7 +80,6 @@ function buildFileTree(files: { [path: string]: string }): FileNode[] {
     });
   };
 
-  // Sort all nodes recursively
   const sortTree = (nodes: FileNode[]): FileNode[] => {
     const sorted = sortNodes(nodes);
     sorted.forEach((node) => {
@@ -187,7 +181,7 @@ function TreeNode({
 export function FileTree({ files, selectedFile, onFileSelect }: FileTreeProps) {
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(
     new Set(["app"])
-  ); // Auto-expand common folders
+  );
 
   const fileTree = buildFileTree(files);
 

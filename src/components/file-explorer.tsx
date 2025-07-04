@@ -2,6 +2,14 @@ import { CodeView } from "@/components/code-view";
 import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
 import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
@@ -15,6 +23,15 @@ type FileCollection = { [path: string]: string };
 function getLangFromFileExtension(filename: string): string {
   const extension = filename.split(".").pop()?.toLowerCase();
   return extension || "text";
+}
+
+function parseFilePath(filePath: string) {
+  const segments = filePath.split("/").filter(Boolean);
+  return segments.map((segment, index) => ({
+    name: segment,
+    path: segments.slice(0, index + 1).join("/"),
+    isLast: index === segments.length - 1,
+  }));
 }
 
 interface FileExplorerProps {
@@ -31,7 +48,6 @@ export const FileExplorer = ({ files }: FileExplorerProps) => {
     if (selectedFile && files[selectedFile]) {
       try {
         await navigator.clipboard.writeText(files[selectedFile]);
-        // You could add a toast notification here
       } catch (err) {
         console.error("Failed to copy to clipboard:", err);
       }
@@ -46,6 +62,8 @@ export const FileExplorer = ({ files }: FileExplorerProps) => {
       files[selectedFile]
     );
   }
+
+  const breadcrumbSegments = selectedFile ? parseFilePath(selectedFile) : [];
 
   return (
     <div className="h-full">
@@ -62,10 +80,34 @@ export const FileExplorer = ({ files }: FileExplorerProps) => {
           {selectedFile && files[selectedFile] ? (
             <>
               <div className="border-b bg-sidebar px-4 py-2 flex justify-between items-center gap-x-2 shrink-0">
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className="text-sm font-medium truncate">
-                    {selectedFile}
-                  </span>
+                <div className="flex items-center gap-2 min-w-0 flex-1">
+                  <Breadcrumb>
+                    <BreadcrumbList>
+                      {breadcrumbSegments.map((segment, index) => (
+                        <BreadcrumbItem key={segment.path}>
+                          {segment.isLast ? (
+                            <BreadcrumbPage className="font-medium">
+                              {segment.name}
+                            </BreadcrumbPage>
+                          ) : (
+                            <>
+                              <BreadcrumbLink
+                                className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors"
+                                onClick={() => {
+                                  console.log(
+                                    `Navigate to folder: ${segment.path}`
+                                  );
+                                }}
+                              >
+                                {segment.name}
+                              </BreadcrumbLink>
+                              <BreadcrumbSeparator />
+                            </>
+                          )}
+                        </BreadcrumbItem>
+                      ))}
+                    </BreadcrumbList>
+                  </Breadcrumb>
                 </div>
                 <Hint text="Copy to clipboard" side="bottom">
                   <Button
