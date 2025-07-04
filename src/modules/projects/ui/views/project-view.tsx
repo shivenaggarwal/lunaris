@@ -32,10 +32,10 @@ export const ProjectView = ({ projectId }: Props) => {
           minSize={20}
           className="flex flex-col min-h-0"
         >
-          <Suspense fallback={<p>Laoding project header....</p>}>
+          <Suspense fallback={<p>Loading project header....</p>}>
             <ProjectHeader projectId={projectId} />
           </Suspense>
-          <Suspense fallback={<p>Laoding messages....</p>}>
+          <Suspense fallback={<p>Loading messages....</p>}>
             <MessagesContainer
               projectId={projectId}
               activeFragment={activeFragment}
@@ -44,14 +44,18 @@ export const ProjectView = ({ projectId }: Props) => {
           </Suspense>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={65} minSize={50}>
+        <ResizablePanel
+          defaultSize={65}
+          minSize={50}
+          className="flex flex-col min-h-0"
+        >
           <Tabs
-            className="h-full gap-y-0"
+            className="h-full flex flex-col"
             defaultValue="preview"
             value={tabState}
             onValueChange={(value) => setTabState(value as "preview" | "code")}
           >
-            <div className="w-full flex items-center p-2 border-b gap-x-2">
+            <div className="w-full flex items-center p-2 border-b gap-x-2 shrink-0">
               <TabsList className="h-8 p-0 border rounded-md">
                 <TabsTrigger value="preview" className="rounded-md">
                   <EyeIcon />
@@ -70,10 +74,10 @@ export const ProjectView = ({ projectId }: Props) => {
                 </Button>
               </div>
             </div>
-            <TabsContent value="preview">
+            <TabsContent value="preview" className="flex-1 min-h-0 m-0">
               {!!activeFragment && <FragmentWeb data={activeFragment} />}
             </TabsContent>
-            <TabsContent value="code">
+            <TabsContent value="code" className="flex-1 min-h-0 m-0">
               {!!activeFragment?.files && (
                 <FileExplorer
                   files={
