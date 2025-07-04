@@ -30,7 +30,6 @@ export const FileExplorer = ({ files }: FileExplorerProps) => {
     if (selectedFile && files[selectedFile]) {
       try {
         await navigator.clipboard.writeText(files[selectedFile]);
-        // You could add a toast notification here
       } catch (err) {
         console.error("Failed to copy to clipboard:", err);
       }
