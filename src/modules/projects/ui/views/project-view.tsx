@@ -8,6 +8,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { UserControl } from "@/components/user-control";
 import { Fragment } from "@/generated/prisma";
 import { FragmentWeb } from "@/modules/projects/ui/components/fragment-web";
 import { MessagesContainer } from "@/modules/projects/ui/components/message-container";
@@ -81,6 +82,7 @@ export const ProjectView = ({ projectId }: Props) => {
                 setTabState(value as "preview" | "code")
               }
             >
+              {/* Fixed header layout */}
               <div className="flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
                 <div className="flex items-center gap-4">
                   <TabsList className="bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">
@@ -110,16 +112,20 @@ export const ProjectView = ({ projectId }: Props) => {
                   )}
                 </div>
 
-                <Button
-                  asChild
-                  size="sm"
-                  className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100"
-                >
-                  <Link href="/pricing" className="flex items-center gap-2">
-                    <CrownIcon className="w-4 h-4" />
-                    <span>Upgrade</span>
-                  </Link>
-                </Button>
+                {/* Right side controls - properly grouped */}
+                <div className="flex items-center gap-3">
+                  <Button
+                    asChild
+                    size="sm"
+                    className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100"
+                  >
+                    <Link href="/pricing" className="flex items-center gap-2">
+                      <CrownIcon className="w-4 h-4" />
+                      <span>Upgrade</span>
+                    </Link>
+                  </Button>
+                  <UserControl />
+                </div>
               </div>
 
               <TabsContent value="preview" className="flex-1 min-h-0 m-0 p-4">
