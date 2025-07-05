@@ -54,6 +54,14 @@ export const ProjectForm = () => {
     });
   };
 
+  const onSelect = (value: string) => {
+    form.setValue("value", value, {
+      shouldDirty: true,
+      shouldValidate: true,
+      shouldTouch: true,
+    });
+  };
+
   const [isFocused, setIsFocused] = useState(false);
   const isPending = createProject.isPending;
   const isBtnDisabled = isPending || !form.formState.isValid;
@@ -119,7 +127,7 @@ export const ProjectForm = () => {
               variant="outline"
               size="sm"
               className="bg-white dark:bg-sidebar"
-              onClick={() => {}}
+              onClick={() => onSelect(template.prompt)}
             >
               {template.emoji} {template.title}
             </Button>
