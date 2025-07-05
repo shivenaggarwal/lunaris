@@ -14,6 +14,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { PROJECT_TEMPLATES } from "@/modules/home/constants";
+import { useClerk } from "@clerk/nextjs";
 
 const formSchema = z.object({
   value: z
@@ -25,6 +26,7 @@ const formSchema = z.object({
 export const ProjectForm = () => {
   const router = useRouter();
   const trpc = useTRPC();
+  const clerk = useClerk();
   const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -42,8 +44,13 @@ export const ProjectForm = () => {
         router.push(`/projects/${data.id}`);
       },
       onError: (error) => {
-        // todo redired to pricing page if out of credits
         toast.error(error.message);
+
+        if (error.data?.code === "UNAUTHORIZED") {
+          clerk.openSignIn();
+        }
+
+        // todo redired to pricing page if out of credits
       },
     })
   );

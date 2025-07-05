@@ -13,10 +13,14 @@ import {
   SparklesIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useUser } from "@clerk/nextjs";
 
 export const ProjectList = () => {
   const trpc = useTRPC();
+  const { user } = useUser();
   const { data: projects } = useQuery(trpc.projects.getMany.queryOptions());
+
+  if (!user) return null;
 
   return (
     <div className="relative w-full">
@@ -29,7 +33,7 @@ export const ProjectList = () => {
           </div>
           <div>
             <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-900 via-blue-800 to-purple-800 dark:from-slate-100 dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
-              Recent Drifts
+              {user?.firstName}&apos;s Drifts
             </h2>
             <p className="text-sm text-muted-foreground">
               Your latest creations
