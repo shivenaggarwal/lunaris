@@ -112,6 +112,14 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@layer base{
+  button:not([disabled]),
+  [role="button"]:not([disabled]){
+    cursor: pointer;
+}
+
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
