@@ -1,6 +1,6 @@
 import { ProjectForm } from "@/modules/home/ui/components/project-form";
 import { ProjectList } from "@/modules/home/ui/components/project-list";
-import Image from "next/image";
+import { Logo } from "@/components/logo";
 
 const Page = () => {
   return (
@@ -19,13 +19,7 @@ const Page = () => {
             <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500" />
 
             <div className="relative p-4 bg-white/80 dark:bg-sidebar/80 backdrop-blur-sm rounded-2xl border-2 border-border/20 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-              <Image
-                src="/logo.svg"
-                alt="lunaris"
-                width={56}
-                height={56}
-                className="block"
-              />
+              <Logo width={64} height={64} />
             </div>
 
             <div className="absolute -top-2 -right-2 w-3 h-3 bg-yellow-400 rounded-full animate-ping" />

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
-import Image from "next/image";
+import { Logo } from "@/components/logo";
 import Link from "next/link";
 import {
   FolderIcon,
@@ -79,13 +79,7 @@ export const ProjectList = () => {
                       <div className="relative">
                         <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full opacity-0 group-hover:opacity-60 transition-opacity duration-300 blur-sm" />
                         <div className="relative p-2 bg-white dark:bg-sidebar rounded-full border-2 border-border/20 group-hover:border-primary/30 transition-colors duration-300">
-                          <Image
-                            src="/logo.svg"
-                            alt="lunaris"
-                            width={32}
-                            height={32}
-                            className="object-contain"
-                          />
+                          <Logo width={50} height={50} />
                         </div>
                       </div>
 

@@ -1,9 +1,9 @@
+import { Logo } from "@/components/logo";
 import { Card } from "@/components/ui/card";
 import { Fragment, MessageRole, MessageType } from "@/generated/prisma";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { ChevronRightIcon, Code2Icon } from "lucide-react";
-import Image from "next/image";
 
 interface UserMessageProps {
   content: string;
@@ -78,13 +78,8 @@ const AssistantMessage = ({
       )}
     >
       <div className="flex items-center gap-2 pl-2 mb-2">
-        <Image
-          src="/logo.svg"
-          alt="lunaris"
-          width={25}
-          height={25}
-          className="shrink-0"
-        />
+        <Logo width={25} height={25} />
+
         <span className="text-sm font-medium">Lunaris</span>
         <span className="text-xs text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100">
           {format(createdAt, "HH:mm 'on' MMM dd, yyy")}

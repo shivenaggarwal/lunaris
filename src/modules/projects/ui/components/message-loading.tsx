@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Logo } from "@/components/logo";
 import { useEffect, useState } from "react";
 
 const ShimmerMessages = () => {
@@ -38,13 +38,8 @@ export const MessageLoading = () => {
   return (
     <div className="flex flex-col group px-2 pb-4 ">
       <div className="flex items-center gap-2 pl-2 mb-2">
-        <Image
-          src="/logo.svg"
-          alt="lunaris"
-          width={25}
-          height={25}
-          className="shrink-0"
-        />
+        <Logo width={64} height={64} />
+
         <span className="text-sm font-medium">Lunaris</span>
       </div>
       <div className="pl-8.5 flex flex-col gap-y-4">

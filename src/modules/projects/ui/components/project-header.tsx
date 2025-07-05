@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { Logo } from "@/components/logo";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -60,13 +60,7 @@ export const ProjectHeader = ({ projectId }: Props) => {
             className="w-full justify-start h-auto p-3 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
           >
             <div className="mr-3 p-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
-              <Image
-                src="/logo.svg"
-                alt="lunaris"
-                width={20}
-                height={20}
-                className="object-contain"
-              />
+              <Logo width={20} height={20} />
             </div>
 
             <div className="flex-1 text-left">
