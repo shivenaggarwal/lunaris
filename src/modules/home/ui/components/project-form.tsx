@@ -7,7 +7,7 @@ import { Form, FormField } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { ArrowUpIcon, Loader2Icon } from "lucide-react";
+import { ArrowUpIcon, Loader2Icon, SparklesIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTRPC } from "@/trpc/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -68,70 +68,116 @@ export const ProjectForm = () => {
 
   return (
     <Form {...form}>
-      <section className="space-y-6">
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className={cn(
-            "relative border p-4 pt-1 rounded-xl bg-sidebar dark:bg-sidebar transition-all",
-            isFocused && "shodow-xs"
-          )}
-        >
-          <FormField
-            control={form.control}
-            name="value"
-            render={({ field }) => (
-              <TextareaAutosize
-                disabled={isPending}
-                {...field}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                minRows={2}
-                maxRows={8}
-                className="pt-4 resize-none border-none w-full outline-none bg-transparent"
-                placeholder="Ask Lunaris to build..."
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-                    e.preventDefault();
-                    form.handleSubmit(onSubmit)(e);
-                  }
-                }}
-              />
+      <section className="space-y-8">
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 dark:from-blue-950/20 dark:via-purple-950/20 dark:to-pink-950/20 rounded-2xl blur-xl opacity-60 -z-10" />
+
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className={cn(
+              "relative border-2 p-6 pt-2 rounded-2xl bg-white/80 dark:bg-sidebar/80 backdrop-blur-sm transition-all duration-300 shadow-lg",
+              isFocused &&
+                "border-primary/50 shadow-xl shadow-primary/10 bg-white dark:bg-sidebar",
+              isPending && "animate-pulse"
             )}
-          />
-          <div className="flex gap-x-2 items-end justify-between pt-2">
-            <div className="text-[10px] text-muted-foreground font-mono">
-              <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-                <span>&#8984;</span>Enter
-              </kbd>
-              &nbsp;to submit
+          >
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full" />
+
+            <FormField
+              control={form.control}
+              name="value"
+              render={({ field }) => (
+                <div className="relative">
+                  {isFocused && (
+                    <SparklesIcon className="absolute top-4 right-4 size-5 text-primary animate-bounce" />
+                  )}
+
+                  <TextareaAutosize
+                    disabled={isPending}
+                    {...field}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    minRows={3}
+                    maxRows={8}
+                    className={cn(
+                      "pt-6 pb-4 pr-12 resize-none border-none w-full outline-none bg-transparent text-lg placeholder:text-muted-foreground/60 transition-all duration-200",
+                      isFocused && "text-foreground"
+                    )}
+                    placeholder="Describe the app you want to build..."
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+                        e.preventDefault();
+                        form.handleSubmit(onSubmit)(e);
+                      }
+                    }}
+                  />
+                </div>
+              )}
+            />
+
+            <div className="flex gap-x-3 items-center justify-between pt-3 border-t border-border/40">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <kbd className="inline-flex h-6 select-none items-center gap-1 rounded-md border bg-muted/60 px-2 font-mono text-xs font-medium text-muted-foreground shadow-sm">
+                  <span className="text-xs">⌘</span>Enter
+                </kbd>
+                <span>to create</span>
+              </div>
+
+              <Button
+                disabled={isBtnDisabled}
+                size="lg"
+                className={cn(
+                  "h-12 w-12 rounded-xl shadow-lg transition-all duration-200 hover:scale-105 active:scale-95",
+                  !isBtnDisabled &&
+                    "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700",
+                  isBtnDisabled &&
+                    "bg-muted-foreground/60 border-muted cursor-not-allowed hover:scale-100"
+                )}
+              >
+                {isPending ? (
+                  <Loader2Icon className="size-5 animate-spin" />
+                ) : (
+                  <ArrowUpIcon className="size-5" />
+                )}
+              </Button>
             </div>
-            <Button
-              disabled={isBtnDisabled}
-              className={cn(
-                "szie-8 rounded-full",
-                isBtnDisabled && "bg-muted-foreground border"
-              )}
-            >
-              {isPending ? (
-                <Loader2Icon className="size-4 animate-spin" />
-              ) : (
-                <ArrowUpIcon />
-              )}
-            </Button>
+          </form>
+        </div>
+
+        <div className="space-y-4">
+          <div className="text-center">
+            <h3 className="text-sm font-medium text-muted-foreground mb-1">
+              Or start with a template
+            </h3>
+            <div className="w-16 h-px bg-gradient-to-r from-transparent via-border to-transparent mx-auto" />
           </div>
-        </form>
-        <div className="flex-wrap justify-center gap-2 hidden md:flex max-w-3xl">
-          {PROJECT_TEMPLATES.map((template) => (
-            <Button
-              key={template.title}
-              variant="outline"
-              size="sm"
-              className="bg-white dark:bg-sidebar"
-              onClick={() => onSelect(template.prompt)}
-            >
-              {template.emoji} {template.title}
-            </Button>
-          ))}
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto">
+            {PROJECT_TEMPLATES.map((template, index) => (
+              <Button
+                key={template.title}
+                variant="outline"
+                size="sm"
+                className={cn(
+                  "h-auto p-4 bg-white/60 dark:bg-sidebar/60 backdrop-blur-sm border-border/40 hover:bg-white dark:hover:bg-sidebar hover:border-primary/30 hover:shadow-md transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] group",
+                  "flex flex-col items-center gap-2 text-center"
+                )}
+                style={{
+                  animationDelay: `${index * 50}ms`,
+                }}
+                onClick={() => onSelect(template.prompt)}
+              >
+                <span className="text-2xl group-hover:scale-110 transition-transform duration-200">
+                  {template.emoji}
+                </span>
+                <span className="text-xs font-medium leading-tight">
+                  {template.title
+                    .replace("Build a ", "")
+                    .replace("Build an ", "")}
+                </span>
+              </Button>
+            ))}
+          </div>
         </div>
       </section>
     </Form>
