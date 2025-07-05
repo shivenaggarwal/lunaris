@@ -15,7 +15,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ChevronDownIcon, ChevronLeftIcon, SunMoonIcon } from "lucide-react";
+import {
+  ChevronDownIcon,
+  SunMoonIcon,
+  MonitorIcon,
+  SunIcon,
+  MoonIcon,
+  HomeIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 
@@ -31,44 +38,98 @@ export const ProjectHeader = ({ projectId }: Props) => {
 
   const { setTheme, theme } = useTheme();
 
+  const getThemeIcon = (themeValue: string) => {
+    switch (themeValue) {
+      case "light":
+        return <SunIcon className="size-4" />;
+      case "dark":
+        return <MoonIcon className="size-4" />;
+      case "system":
+        return <MonitorIcon className="size-4" />;
+      default:
+        return <SunMoonIcon className="size-4" />;
+    }
+  };
+
   return (
-    <header className="p-2 flex justify-between items-center border-b">
+    <header className="p-4 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            size="sm"
-            className="focus-visible:ring-0 hover:bg-transparent hover:opacity-75 transition-opacity pl-2!"
+            className="w-full justify-start h-auto p-3 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
           >
-            <Image src="/logo.svg" alt="lunaris" width={25} height={25} />
-            <span className="text-sm font-medium">{project.name}</span>
-            <ChevronDownIcon />
+            <div className="mr-3 p-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+              <Image
+                src="/logo.svg"
+                alt="lunaris"
+                width={20}
+                height={20}
+                className="object-contain"
+              />
+            </div>
+
+            <div className="flex-1 text-left">
+              <div className="font-semibold text-zinc-900 dark:text-zinc-100">
+                {project.name}
+              </div>
+              <div className="text-sm text-zinc-500 dark:text-zinc-400">
+                Click to manage
+              </div>
+            </div>
+
+            <ChevronDownIcon className="size-4 text-zinc-400" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent side="bottom" align="start">
+
+        <DropdownMenuContent
+          side="bottom"
+          align="start"
+          className="w-64 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg"
+        >
           <DropdownMenuItem asChild>
-            <Link href="/">
-              <ChevronLeftIcon />
-              <span>Go to Dashboard</span>
+            <Link href="/" className="flex items-center gap-3 p-3">
+              <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+                <HomeIcon className="size-4 text-zinc-600 dark:text-zinc-400" />
+              </div>
+              <div>
+                <div className="font-medium">Dashboard</div>
+                <div className="text-sm text-zinc-500 dark:text-zinc-400">
+                  Return to home
+                </div>
+              </div>
             </Link>
           </DropdownMenuItem>
+
           <DropdownMenuSeparator />
+
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger className="gap-2">
-              <SunMoonIcon className="size-4 text-muted-foreground" />
-              <span>Appearance</span>
+            <DropdownMenuSubTrigger className="flex items-center gap-3 p-3">
+              <div className="p-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+                {getThemeIcon(theme || "system")}
+              </div>
+              <div>
+                <div className="font-medium">Theme</div>
+                <div className="text-sm text-zinc-500 dark:text-zinc-400 capitalize">
+                  {theme || "system"}
+                </div>
+              </div>
             </DropdownMenuSubTrigger>
+
             <DropdownMenuPortal>
-              <DropdownMenuSubContent>
+              <DropdownMenuSubContent className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
                 <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
-                  <DropdownMenuRadioItem value="light">
+                  <DropdownMenuRadioItem value="light" className="gap-3">
+                    <SunIcon className="size-4" />
                     <span>Light</span>
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="dark">
+                  <DropdownMenuRadioItem value="dark" className="gap-3">
+                    <MoonIcon className="size-4" />
                     <span>Dark</span>
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="device">
-                    <span>Device</span>
+                  <DropdownMenuRadioItem value="system" className="gap-3">
+                    <MonitorIcon className="size-4" />
+                    <span>System</span>
                   </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuSubContent>
