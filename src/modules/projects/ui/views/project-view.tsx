@@ -17,6 +17,7 @@ import { useAuth } from "@clerk/nextjs";
 import { CodeIcon, CrownIcon, EyeIcon } from "lucide-react";
 import Link from "next/link";
 import { Suspense, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 interface Props {
   projectId: string;
@@ -38,35 +39,39 @@ export const ProjectView = ({ projectId }: Props) => {
           className="flex flex-col min-h-0"
         >
           <div className="h-full bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 flex flex-col">
-            <Suspense
-              fallback={
-                <div className="p-4 flex items-center gap-3 border-b border-zinc-200 dark:border-zinc-800">
-                  <div className="w-8 h-8 bg-zinc-200 dark:bg-zinc-700 rounded-lg animate-pulse" />
-                  <div className="h-4 bg-zinc-200 dark:bg-zinc-700 rounded w-32 animate-pulse" />
-                </div>
-              }
-            >
-              <ProjectHeader projectId={projectId} />
-            </Suspense>
-
-            <Suspense
-              fallback={
-                <div className="flex-1 flex items-center justify-center p-8">
-                  <div className="text-center space-y-4">
-                    <div className="w-12 h-12 bg-zinc-200 dark:bg-zinc-700 rounded-xl animate-pulse mx-auto" />
-                    <p className="text-zinc-500 dark:text-zinc-400">
-                      Loading conversation...
-                    </p>
+            <ErrorBoundary fallback={<p>Project Header Error!</p>}>
+              <Suspense
+                fallback={
+                  <div className="p-4 flex items-center gap-3 border-b border-zinc-200 dark:border-zinc-800">
+                    <div className="w-8 h-8 bg-zinc-200 dark:bg-zinc-700 rounded-lg animate-pulse" />
+                    <div className="h-4 bg-zinc-200 dark:bg-zinc-700 rounded w-32 animate-pulse" />
                   </div>
-                </div>
-              }
-            >
-              <MessagesContainer
-                projectId={projectId}
-                activeFragment={activeFragment}
-                setActiveFragment={setActiveFragment}
-              />
-            </Suspense>
+                }
+              >
+                <ProjectHeader projectId={projectId} />
+              </Suspense>
+            </ErrorBoundary>
+
+            <ErrorBoundary fallback={<p>Messages Container Error</p>}>
+              <Suspense
+                fallback={
+                  <div className="flex-1 flex items-center justify-center p-8">
+                    <div className="text-center space-y-4">
+                      <div className="w-12 h-12 bg-zinc-200 dark:bg-zinc-700 rounded-xl animate-pulse mx-auto" />
+                      <p className="text-zinc-500 dark:text-zinc-400">
+                        Loading conversation...
+                      </p>
+                    </div>
+                  </div>
+                }
+              >
+                <MessagesContainer
+                  projectId={projectId}
+                  activeFragment={activeFragment}
+                  setActiveFragment={setActiveFragment}
+                />
+              </Suspense>
+            </ErrorBoundary>
           </div>
         </ResizablePanel>
 
