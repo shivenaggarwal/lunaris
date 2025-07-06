@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lunaris
 
-## Getting Started
+> _"What if building apps was as easy as just... asking for them?"_
 
-First, run the development server:
+**Lunaris** is an AI-powered app builder that turns your wildest ideas into production-ready Next.js apps. Just describe what you want, and watch the magic happen in real-time.
+
+## What Does It Do?
+
+- **Chat to Code**: Describe your app in plain English
+- **Instant Preview**: Watch your app come to life in seconds
+- **Full-Stack Magic**: Complete with UI, interactions, and file structure
+- **Iterate Fast**: Refine and modify with follow-up messages
+- **Production Ready**: Built with Next.js 15, TypeScript, and Tailwind
+
+## Quick Start
 
 ```bash
+# Clone the chaos
+git clone https://github.com/shivenaggarwal/lunaris.git
+cd lunaris
+
+# Install the magic
+npm install
+
+# Set up your environment
+cp .env.example .env.local
+# Fill in your secrets (you know the drill)
+
+# Generate the database
+npx prisma generate
+npx prisma db push
+
+# Launch into orbit
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS, Shadcn/UI
+- **Database**: PostgreSQL + Prisma
+- **Auth**: Clerk
+- **AI**: Multi-agent system with OpenAI
+- **Sandboxing**: E2B for safe code execution
+- **Background Jobs**: Inngest
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Example Prompts
 
-## Learn More
+- _"Build a Netflix clone with dark mode"_
+- _"Create a kanban board with drag and drop"_
+- _"Make an admin dashboard with charts"_
+- _"Build a file manager with folders"_
 
-To learn more about Next.js, take a look at the following resources:
+## How It Works
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Chat**: Tell Lunaris what you want to build
+2. **Generate**: AI agents collaborate to write your app
+3. **Preview**: See your app running live in seconds
+4. **Iterate**: Refine with natural language feedback
+5. **Deploy**: Export and ship your creation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── app/
+├── components/
+├── modules/
+├── inngest/
+├── trpc/
+└── lib/
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Real-time Collaboration**: Multi-agent AI system
+- **Live Previews**: Instant visual feedback
+- **Code Explorer**: Dive into generated source
+- **Usage Tracking**: Credit system with pro tiers
+- **Template Library**: Quick-start options
+
+## Contributing
+
+Found a bug? Have a wild idea?
+
+1. Fork it
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+## License
+
+MIT License - Go wild, build amazing things!
+
+---
+
+_Built with love and excessive amounts of caffeine_
