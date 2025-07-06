@@ -13,6 +13,7 @@ import { Fragment } from "@/generated/prisma";
 import { FragmentWeb } from "@/modules/projects/ui/components/fragment-web";
 import { MessagesContainer } from "@/modules/projects/ui/components/message-container";
 import { ProjectHeader } from "@/modules/projects/ui/components/project-header";
+import { useAuth } from "@clerk/nextjs";
 import { CodeIcon, CrownIcon, EyeIcon } from "lucide-react";
 import Link from "next/link";
 import { Suspense, useState } from "react";
@@ -22,6 +23,9 @@ interface Props {
 }
 
 export const ProjectView = ({ projectId }: Props) => {
+  const { has } = useAuth();
+  const hasProAccess = has?.({ plan: "pro" });
+
   const [activeFragment, setActiveFragment] = useState<Fragment | null>(null);
   const [tabState, setTabState] = useState<"preview" | "code">("preview");
 
@@ -112,18 +116,19 @@ export const ProjectView = ({ projectId }: Props) => {
                   )}
                 </div>
 
-                {/* Right side controls - properly grouped */}
                 <div className="flex items-center gap-3">
-                  <Button
-                    asChild
-                    size="sm"
-                    className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100"
-                  >
-                    <Link href="/pricing" className="flex items-center gap-2">
-                      <CrownIcon className="w-4 h-4" />
-                      <span>Upgrade</span>
-                    </Link>
-                  </Button>
+                  {!hasProAccess && (
+                    <Button
+                      asChild
+                      size="sm"
+                      className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100"
+                    >
+                      <Link href="/pricing" className="flex items-center gap-2">
+                        <CrownIcon className="w-4 h-4" />
+                        <span>Upgrade</span>
+                      </Link>
+                    </Button>
+                  )}
                   <UserControl />
                 </div>
               </div>
